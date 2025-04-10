@@ -1,22 +1,49 @@
-# Attention_model
 # RETAIN Model - Homework 4
 
-This Jupyter notebook demonstrates the implementation and data preparation pipeline for the **RETAIN (REverse Time AttentIoN)** model. The RETAIN model is a neural architecture designed to provide interpretable predictions on electronic health records using a reversed recurrent attention mechanism.
+This notebook implements the RETAIN (REverse Time AttentIoN) model to provide interpretable predictions on healthcare time-series data. The focus is on building and training the model using patient electronic health records (EHRs).
 
 ---
 
-## 📁 Dataset
+## 📁 Dataset Description
 
-The dataset used for training the model is stored in a directory specified by `DATA_PATH`. It includes preprocessed EHR (Electronic Health Record) data for multiple patients, which consists of:
+The data files are located in a path defined as `../HW4_RETAIN-lib/data/`, and consist of the following:
 
-- `pids.pkl`: Patient IDs
-- `vids.pkl`: Visit IDs (each patient has multiple visits)
-- `hfs.pkl`: Heart failure label (1 if the patient had heart failure, else 0)
-- `seqs.pkl`: Diagnosis codes per visit
-- `types.pkl`: List of unique medical codes
-- `rtypes.pkl`: Reverse lookup of diagnosis codes to readable names
+- **`pids.pkl`**: Patient IDs  
+- **`vids.pkl`**: Visit IDs (multiple per patient)  
+- **`hfs.pkl`**: Heart failure labels (1 or 0)  
+- **`seqs.pkl`**: Sequences of diagnosis codes per visit  
+- **`types.pkl`**: List of all diagnosis code types  
+- **`rtypes.pkl`**: Reverse mapping of code labels to readable strings  
 
-These files are loaded using `pickle`:
+These are loaded using `pickle` for processing.
+
+---
+
+## 🧪 Data Exploration
+
+The notebook explores a single patient’s data (index 3) to display:
+
+- Patient ID  
+- Heart failure label  
+- Visit details  
+- Diagnosis codes (raw and readable)
+
+It also prints the total number and proportion of heart failure patients in the training data.
+
+---
+
+## 🧱 PyTorch Dataset Class
+
+A custom PyTorch Dataset class is defined to handle patient data in batches during training.
 
 ```python
-pids = pickle.load(open(os.path.join(DATA_PATH,'train/pids.pkl'), 'rb'))
+class CustomDataset(Dataset):
+    def __init__(self, seqs, hfs):
+        self.x = seqs
+        self.y = hfs
+
+    def __len__(self):
+        return len(self.x)
+
+    def __getitem__(self, index):
+        return self.x[index], self.y[index]
