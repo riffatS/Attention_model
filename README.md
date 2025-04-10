@@ -30,9 +30,8 @@ The notebook explores a single patient’s data (index 3) to display:
 
 It also prints the total number and proportion of heart failure patients in the training data.
 
-##📌 Setup and Reproducibility
+## 📌 Setup and Reproducibility
 Random seeds are fixed to ensure reproducibility across experiments.
-
 
 seed = 24
 random.seed(seed)
@@ -42,14 +41,14 @@ os.environ["PYTHONHASHSEED"] = str(seed)
 📓 Full Notebook Content
 The notebook includes:
 
--Data loading
--Exploratory inspection
--Dataset class creation
--Further steps would likely include:
--Sequence padding
--RETAIN model architecture
--Training and evaluation
--Attention visualization for interpretability
+- Data loading
+- Exploratory inspection
+- Dataset class creation
+- Further steps would likely include:
+- Sequence padding
+- RETAIN model architecture
+- Training and evaluation
+- Attention visualization for interpretability
 
 ---
 
